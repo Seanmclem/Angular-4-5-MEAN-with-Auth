@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>LOGIN Form</h1>
+  <p *ngIf="loginStatus"> 
+    {{loggedInUser.email}}
+  </p>
+  <div *ngIf="!loginStatus" [hidden]="submitting">
+    <form
+      action="/login"
+      method="post"
+      #userForm="ngForm"
+      (ngSubmit)="onSubmit(userForm.value)">
+
+      <div class="form-group">
+        <label for="logemail">Email</label>
+        <input type="email" class="form-control" id="logemail" required
+        [(ngModel)]="model.logemail" name="logemail"
+        #logemail="ngModel">
+      </div>
+
+      <div class="form-group">
+        <label for="logpassword">Password</label>
+        <input type="password" class="form-control" id="logpassword" required
+        [(ngModel)]="model.logpassword" name="logpassword"
+        #logpassword="ngModel">
+        <div [hidden]="logpassword.valid || logpassword.pristine"
+             class="alert alert-danger">
+          Password is required
+        </div>
+      </div>
+
+
+      <button type="submit" class="btn btn-success"
+      [disabled]="!userForm.form.valid"
+      >Submit</button>
+
+      <!-- <button type="submit" class="btn btn-success"
+      (click)="newUser(); userForm.reset()"
+      >Clear</button> -->
+
+    </form>
+  </div>
+  <div [hidden]="!submitting">Submitting</div>
+</div>

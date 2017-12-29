@@ -1,0 +1,63 @@
+<div class="container">
+    <h1>Registration Form</h1>
+    <div [hidden]="submitting">
+      <form
+        action="/register"
+        method="post"
+        #userForm="ngForm"
+        (ngSubmit)="onSubmit(userForm.value)">
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" required
+          [(ngModel)]="model.email" name="email"
+          #email="ngModel">
+
+          <div [hidden]="email.valid || email.pristine"
+                class="alert alert-danger">
+          Email is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username">username</label>
+          <input type="text" class="form-control" id="username" required
+          [(ngModel)]="model.username" name="username"
+          #username="ngModel">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" required
+          [(ngModel)]="model.password" name="password"
+          #password="ngModel">
+          <div [hidden]="password.valid || password.pristine"
+               class="alert alert-danger">
+            Password is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordConf">Confirm Password</label>
+          <input type="password"  class="form-control" id="passwordConf" required
+          [(ngModel)]="model.passwordConf" name="passwordConf"
+          #passwordConf="ngModel">
+          <div [hidden]="passwordConf.valid || passwordConf.pristine"
+               class="alert alert-danger">
+            Confirm Password is required
+          </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-success"
+        [disabled]="!userForm.form.valid"
+        >Submit</button>
+
+        <!-- <button type="submit" class="btn btn-success"
+        (click)="newUser(); userForm.reset()"
+        >Clear</button> -->
+
+      </form>
+    </div>
+    <div [hidden]="!submitting">Submitting</div>
+</div>

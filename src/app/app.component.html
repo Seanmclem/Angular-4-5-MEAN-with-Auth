@@ -1,0 +1,27 @@
+<nav>
+  <ul *ngIf="!loginStatus">
+    <li>
+          <a routerLink="/" routerLinkActive="active">Home</a>
+    </li>
+    <li>
+      <a routerLink="/signup" routerLinkActive="active">Sign Up</a>
+    </li>
+    <li>
+         <a routerLink="/login" routerLinkActive="active">Log in</a>
+    </li>
+  </ul>
+
+  <ul *ngIf="loginStatus">
+      <li>
+          <a routerLink="/" routerLinkActive="active">Home</a>
+    </li>
+    <li>
+      <a routerLink="/account" routerLinkActive="active">{{loggedInUser.email}}</a>
+    </li>
+    <li>
+      <a href="/" (click)="logout()">Logout</a>
+    </li>
+  </ul>
+</nav>
+
+<router-outlet></router-outlet>
