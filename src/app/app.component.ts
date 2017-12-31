@@ -42,12 +42,21 @@ export class AppComponent implements OnInit{
 
 
     this._authService.checkIfUser(this.loggedInUser).subscribe(res => { //need to just check cookie, if not logged in throws error
-      this.loggedInUser = JSON.parse(res["_body"]); 
-      this._authService.changeUser({
-        id:this.loggedInUser.id, 
-        email:this.loggedInUser.email
-      });
-      this._authService.changeStatus(true);
+      if(res["_body"] == null || res["_body"] == "" || res["_body"] == undefined){
+        this._authService.changeStatus(false);
+        this._authService.changeUser({
+          id:null, 
+          email:null
+        });
+        
+      } else {
+        this.loggedInUser = JSON.parse(res["_body"]);        
+        this._authService.changeUser({
+          id: this.loggedInUser.id, 
+          email: this.loggedInUser.email
+        });
+        this._authService.changeStatus(true);
+      }
     });
   }
 

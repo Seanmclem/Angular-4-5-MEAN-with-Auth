@@ -22,13 +22,32 @@ export class AuthGuard implements CanActivate {
       this._authService.loginStatus.subscribe(status => this.loggedIn = status);
 
       this._authService.checkIfUser(this.loggedInUser).subscribe(res => {
-        this.loggedInUser = JSON.parse(res["_body"]); 
+        
+        if(res["_body"] == null || res["_body"] == "" || res["_body"] == undefined){
+          this._authService.changeStatus(false);
+          this._authService.changeUser({
+            id:null, 
+            email:null
+          });
+          
+        }
+        else {
+          this.loggedInUser = JSON.parse(res["_body"]);          
+          this._authService.changeUser({
+            id: this.loggedInUser.id, 
+            email: this.loggedInUser.email
+          })
+          this._authService.changeStatus(true);
+        }
 
-        this._authService.changeUser({
-          id:this.loggedInUser.id, 
-          email:this.loggedInUser.email
-        });
-        this._authService.changeStatus(true);
+
+        // this.loggedInUser = JSON.parse(res["_body"]); 
+
+        // this._authService.changeUser({
+        //   id:this.loggedInUser.id, 
+        //   email:this.loggedInUser.email
+        // });
+        // this._authService.changeStatus(true);
 
         if (!this.loggedIn) {
           // redirect the user
