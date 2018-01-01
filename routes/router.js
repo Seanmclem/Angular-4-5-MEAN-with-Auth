@@ -89,10 +89,12 @@ router.post('/api/verify-auth', function (req, res, next) {
       if (error) {
         return next(error);
       } else {
+        debugger;
         if (user === null) {
-          var err = new Error('Not authorized! Go back!');
-          err.status = 400;
-          return next(err);
+          // var err = new Error('Not authorized! Go back!');
+          // err.status = 400;
+          // return next(err);
+          return res.send(user);
         } else {
           return res.send({
             id : user._id, 
