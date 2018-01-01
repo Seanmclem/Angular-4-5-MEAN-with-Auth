@@ -2,7 +2,7 @@ This is an Angular 4 MEAN stack app with user registration and authentication. I
 
 TO DOs
 Write better README
-upgrade all NPM packages including angular
+upgrade all NPM packages besides angular
 figure out upgrade issues with mongoose/mongo post-updates, likely opneURI based
 better error handling
 simplify login cookie check on first access
