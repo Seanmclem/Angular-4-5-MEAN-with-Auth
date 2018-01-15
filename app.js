@@ -35,17 +35,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Send all other requests to the Angular app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
-
 // serve static files from template
 //app.use(express.static(__dirname + '/templateLogReg'));
 
 // include routes
 var routes = require('./routes/router');
 app.use('/', routes);
+
+// Send all other requests to the Angular app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

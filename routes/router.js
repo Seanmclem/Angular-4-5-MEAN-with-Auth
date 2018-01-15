@@ -9,26 +9,34 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/api/login', function(req, res, next){
+  //debugger;
   if (req.body.logemail && req.body.logpassword) {
+    //username and password present
     User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
       if (error || !user) {
-        var err = new Error('Wrong email or password.');
-        err.status = 401;
-        return next(err);
+
+        res.json({ success: false, message: 'Wrong email or password', user : null});
       } else {
         req.session.userId = user._id;
-        //req.session.user = user;
-        return res.send({
-          id : user._id, 
-          email : user.email
+
+        res.json({ 
+          success: true, 
+          message: 'Successfully logged in', 
+          user : {
+            id : user._id, 
+            email : user.email
+          }
+
         });
       }
     });
   } else {
-    var err = new Error('All fields required.');
-    err.status = 400;
-    return next(err);
+
+    res.json({ success: false, message: 'All fields required', user : null});
+
   }
+
+  return router;///
 })
 
 
@@ -89,7 +97,7 @@ router.post('/api/verify-auth', function (req, res, next) {
       if (error) {
         return next(error);
       } else {
-        debugger;
+        //debugger;
         if (user === null) {
           // var err = new Error('Not authorized! Go back!');
           // err.status = 400;

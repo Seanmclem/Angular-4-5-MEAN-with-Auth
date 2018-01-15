@@ -22,11 +22,17 @@
         <input type="password" class="form-control" id="logpassword" required
         [(ngModel)]="model.logpassword" name="logpassword"
         #logpassword="ngModel">
+        <!-- [hidden]="logpassword.valid || logpassword.pristine" -->
         <div [hidden]="logpassword.valid || logpassword.pristine"
              class="alert alert-danger">
           Password is required
         </div>
       </div>
+
+      <div [hidden]="errorMessage == ''"
+      class="alert alert-danger">
+   {{errorMessage}}
+ </div>
 
 
       <button type="submit" class="btn btn-success"

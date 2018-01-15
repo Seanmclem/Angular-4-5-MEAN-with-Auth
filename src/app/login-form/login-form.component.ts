@@ -22,17 +22,31 @@ export class LoginFormComponent implements OnInit {
   loginStatus: boolean = false;
   loggedInUser: UserData;
 
+  errorMessage: string = "";
+  //successMessage: string = "";
+
   login(loginData){
     this._authService.login(loginData).subscribe(res => { 
+      this.errorMessage = "";
+      var result = JSON.parse(res["_body"]);
 
-      this.loggedInUser = JSON.parse(res["_body"]);
-      this.submitting = false;
-      this._authService.changeUser({
-        id:this.loggedInUser.id, 
-        email:this.loggedInUser.email
-      });
-      this._authService.changeStatus(true);
-      this.router.navigate(['/account']);      
+      if(result.success){
+        this.loggedInUser = result.user;
+        this.submitting = false;
+        this._authService.changeUser({
+          id:this.loggedInUser.id, 
+          email:this.loggedInUser.email
+        });
+        this._authService.changeStatus(true);
+        this.router.navigate(['/account']); 
+      }
+      else{
+        this.submitting = false;
+        this._authService.changeStatus(false);
+        this._authService.changeUser(null);
+        this.errorMessage = result.message; 
+      }
+     
     });
   }
 
