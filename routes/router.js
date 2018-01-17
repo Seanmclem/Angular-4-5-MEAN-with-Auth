@@ -26,7 +26,6 @@ router.post('/api/login', function(req, res, next){
             id : user._id, 
             email : user.email
           }
-
         });
       }
     });
@@ -44,10 +43,16 @@ router.post('/api/login', function(req, res, next){
 router.post('/api/register', function (req, res, next) { //was just '/'
   // confirm that user typed same password twice
   if (req.body.password !== req.body.passwordConf) {
-    var err = new Error('Passwords do not match.');
-    err.status = 400;
-    res.send("passwords dont match");
-    return next(err);
+    // var err = new Error('Passwords do not match.');
+    // err.status = 400;
+    // res.send("passwords dont match");
+    // return next(err);
+
+    res.json({ 
+      success: false, 
+      message: 'Passwords do not match', 
+      user : null
+    });
   }
 
   if (req.body.email &&
@@ -64,24 +69,34 @@ router.post('/api/register', function (req, res, next) { //was just '/'
 
     User.create(userData, function (error, user) {
       if (error) {
-        return next(error);
+        res.json({ 
+          success: false, 
+          message: 'Email already registered', 
+          user : null
+        });
       } else {
         req.session.userId = user._id;
-        return res.send({
-          id : user._id, 
-          email : user.email
+
+        res.json({ 
+          success: true, 
+          message: 'Successfully registered', 
+          user : null
         });
       }
     });
 
   } else {
-    var err = new Error('All fields required.');
-    err.status = 400;
-    return next(err);
+    res.json({ 
+      success: false, 
+      message: 'All fields required', 
+      user : null
+    });
   }
+
+  return router;
 })
 
-function requiresLogin(req, res, next) {///////////???????????????????????
+function requiresLogin(req, res, next) {/////////// remove/replace?
   if (req.session && req.session.userId) {
     return next();
   } else {
@@ -97,11 +112,7 @@ router.post('/api/verify-auth', function (req, res, next) {
       if (error) {
         return next(error);
       } else {
-        //debugger;
         if (user === null) {
-          // var err = new Error('Not authorized! Go back!');
-          // err.status = 400;
-          // return next(err);
           return res.send(user);
         } else {
           return res.send({

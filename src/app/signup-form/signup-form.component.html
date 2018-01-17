@@ -48,6 +48,11 @@
           </div>
         </div>
 
+        <div [hidden]="errorMessage == ''"
+        class="alert alert-danger">
+     {{errorMessage}}
+   </div>
+
 
         <button type="submit" class="btn btn-success"
         [disabled]="!userForm.form.valid"

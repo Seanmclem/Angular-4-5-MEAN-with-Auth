@@ -15,16 +15,34 @@ export class SignupFormComponent implements OnInit {
 
   }
   
-
+  errorMessage: string = "";
 
   register(userData){
+    //can check if passwords match or fields completed right here on front end
+    this.errorMessage = "";
 
-    this._authService.register(userData)
-    .subscribe(res => { 
-      this.model = new User("","","", "");
-      this.router.navigate(['/login']);
-    });
+    if (userData.email && userData.username && userData.password && userData.passwordConf) { //has all fields
+     
+        if (userData.password !== userData.passwordConf){
+          this.submitting = false;
+          this.errorMessage = "passwords must match";
+        } else {//passwords match
+          this._authService.register(userData)
+          .subscribe(res => { 
+            var result = JSON.parse(res["_body"]);
+            if(result.success){
+              this.model = new User("","","", "");//needed?
+              this.router.navigate(['/login']);
+            } else {
+              this.submitting = false;
+              this.errorMessage = result.message;
+            }
 
+          });      
+        }
+      } else { // some fields missing
+        this.errorMessage = "All fields required";
+      }
   }
 
 
