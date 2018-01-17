@@ -27,18 +27,24 @@ export class SignupFormComponent implements OnInit {
           this.submitting = false;
           this.errorMessage = "passwords must match";
         } else {//passwords match
-          this._authService.register(userData)
-          .subscribe(res => { 
-            var result = JSON.parse(res["_body"]);
-            if(result.success){
-              this.model = new User("","","", "");//needed?
-              this.router.navigate(['/login']);
-            } else {
-              this.submitting = false;
-              this.errorMessage = result.message;
-            }
+          if(/\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userData.email)){//is valid email
+            this._authService.register(userData)
+            .subscribe(res => { 
+              var result = JSON.parse(res["_body"]);
+              if(result.success){
+                this.model = new User("","","", "");//needed?
+                this.router.navigate(['/login']);
+              } else {
+                this.submitting = false;
+                this.errorMessage = result.message;
+              }
 
-          });      
+            }); 
+          } else {//invalid email
+            this.submitting = false;
+            this.errorMessage = "Please use a valid email address. Example: joe@abc.com";
+          }
+     
         }
       } else { // some fields missing
         this.errorMessage = "All fields required";
