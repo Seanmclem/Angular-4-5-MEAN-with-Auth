@@ -21,7 +21,7 @@ export class SignupFormComponent implements OnInit {
     //can check if passwords match or fields completed right here on front end
     this.errorMessage = "";
 
-    if (userData.email && userData.username && userData.password && userData.passwordConf) { //has all fields
+    if (userData.email && userData.password && userData.passwordConf) { //has all fields
      
         if (userData.password !== userData.passwordConf){
           this.submitting = false;

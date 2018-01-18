@@ -9,20 +9,13 @@ var UserSchema = new mongoose.Schema({
     trim: true,
     unique: true
   },
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-    unique: true
-  },
   password: {
     type: String,
     required: true,
   },
   passwordConf: {
     type: String,
-    required: true,
+    required: false,
   }
 });
 

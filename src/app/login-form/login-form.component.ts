@@ -16,8 +16,7 @@ export class LoginFormComponent implements OnInit {
 
   }
 
-  model = new User("","","", "");
-  userName: string = "";
+  model = new User("","", "");
   submitting: boolean = false;
   loginStatus: boolean = false;
   loggedInUser: UserData;
