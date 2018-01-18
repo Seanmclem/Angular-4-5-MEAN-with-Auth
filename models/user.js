@@ -12,10 +12,6 @@ var UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  passwordConf: {
-    type: String,
-    required: false,
   }
 });
 
@@ -48,7 +44,6 @@ UserSchema.pre('save', function (next) {
       return next(err);
     }
     user.password = hash;
-    user.passwordConf = hash;
     next();
   })
 });

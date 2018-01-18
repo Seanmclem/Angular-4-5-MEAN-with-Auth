@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/api/login', function(req, res, next){
-  //debugger;
   if (req.body.logemail && req.body.logpassword) {
     //username and password present
     User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
@@ -41,28 +40,11 @@ router.post('/api/login', function(req, res, next){
 
 //POST route for updating data
 router.post('/api/register', function (req, res, next) { //was just '/'
-  // confirm that user typed same password twice
-  if (req.body.password !== req.body.passwordConf) {
-    // var err = new Error('Passwords do not match.');
-    // err.status = 400;
-    // res.send("passwords dont match");
-    // return next(err);
-
-    res.json({ 
-      success: false, 
-      message: 'Passwords do not match', 
-      user : null
-    });
-  }
-
-  if (req.body.email &&
-    req.body.password &&
-    req.body.passwordConf) {
+  if (req.body.email && req.body.password) {
 
     var userData = {
       email: req.body.email,
-      password: req.body.password,
-      passwordConf: req.body.passwordConf,
+      password: req.body.password
     }
 
     User.create(userData, function (error, user) {
