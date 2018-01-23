@@ -41,8 +41,9 @@ export class AppComponent implements OnInit{
     this._authService.loginStatus.subscribe(status => this.loginStatus = status);
 
 
-    this._authService.checkIfUser(this.loggedInUser).subscribe(res => { //need to just check cookie, if not logged in throws error
-      if(res["_body"] == null || res["_body"] == "" || res["_body"] == undefined){
+    this._authService.checkIfUser(this.loggedInUser).then(res => { //need to just check cookie, if not logged in throws error
+      debugger;
+      if(res == null || res == undefined || res == ""){
         this._authService.changeStatus(false);
         this._authService.changeUser({
           id:null, 
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit{
         });
         
       } else {
-        this.loggedInUser = JSON.parse(res["_body"]);        
+        this.loggedInUser = JSON.parse(res);        
         this._authService.changeUser({
           id: this.loggedInUser.id, 
           email: this.loggedInUser.email

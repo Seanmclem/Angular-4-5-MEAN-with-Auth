@@ -25,9 +25,10 @@ export class LoginFormComponent implements OnInit {
   //successMessage: string = "";
 
   login(loginData){
-    this._authService.login(loginData).subscribe(res => { 
+    this._authService.login(loginData).then(res => { 
+      debugger;
       this.errorMessage = "";
-      var result = JSON.parse(res["_body"]);
+      var result = JSON.parse(res);
 
       if(result.success){
         this.loggedInUser = result.user;
