@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from './data.service';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { AuthService } from './auth/auth.service';
-import { UserData } from '../../models/loggedInUser';
+import { UserData } from '../models/loggedInUser';
 import { Router } from '@angular/router';
 
 //import '../../routes/router';

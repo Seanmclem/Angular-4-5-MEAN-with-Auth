@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/user');
+var User = require('./models/user');
 
 
 // GET route for reading data
@@ -13,7 +13,6 @@ router.post('/api/login', function(req, res, next){
     //username and password present
     User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
       if (error || !user) {
-
         res.json({ success: false, message: 'Wrong email or password', user : null});
       } else {
         req.session.userId = user._id;
@@ -29,17 +28,15 @@ router.post('/api/login', function(req, res, next){
       }
     });
   } else {
-
     res.json({ success: false, message: 'All fields required', user : null});
-
   }
 
-  return router;///
+  return router;
 })
 
 
 //POST route for updating data
-router.post('/api/register', function (req, res, next) { //was just '/'
+router.post('/api/register', function (req, res, next) {
   if (req.body.email && req.body.password) {
 
     var userData = {

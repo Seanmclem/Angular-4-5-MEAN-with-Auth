@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server/app.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -28,6 +28,7 @@
     "core-js": "^2.4.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "jwt-decode": "^2.2.0",
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.1",
     "nodemon": "^1.12.1",

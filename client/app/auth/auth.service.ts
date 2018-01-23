@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import  'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { UserData } from '../../../models/loggedInUser';
+import { UserData } from '../../models/loggedInUser';
+import * as jwt_decode from 'jwt-decode';
+
+export const TOKEN_NAME: string = 'jwt_token';
 
 @Injectable()
 export class AuthService {
